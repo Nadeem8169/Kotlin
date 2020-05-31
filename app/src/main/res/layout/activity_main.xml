@@ -68,7 +68,6 @@
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/submit"
-            android:onClick="confirmInput"
             android:text="submit"
             android:textSize="18dp"/>
 

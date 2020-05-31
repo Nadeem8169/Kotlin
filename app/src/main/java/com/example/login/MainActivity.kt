@@ -1,5 +1,6 @@
 package com.example.login
 
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.textfield.TextInputLayout
@@ -8,58 +9,68 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var textInputEmail: TextInputLayout
-    private lateinit var textInputUserName: TextInputLayout
-    private lateinit var textInputPassword: TextInputLayout
-    private lateinit var ClickButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textInputEmail =  findViewById(R.id.inputEmail) as TextInputLayout
-        textInputUserName = findViewById(R.id.inputUsername) as TextInputLayout
-        textInputPassword = findViewById(R.id.inputpassword) as TextInputLayout
+
+        // This method invoke when you click sunbmit button
+        submit.setOnClickListener(View.OnClickListener {
+            if (validEmail() and validUserName() and validPassword()) {
+
+                Toast.makeText(this, "Login Successfull", Toast.LENGTH_SHORT).show()
+                inputEmail.textEmail.setText(null)
+                inputpassword.textPassword.setText(null)
+                inputUsername.textUsername.setText(null)
+            }
+
+
+        })
+
+        submit.background=gradientDrawable
+
 
 
     }
 
     //Validation for the Email
     private fun validEmail(): Boolean {
-        var Email: String = textInputEmail.textEmail.text.toString()
+        var Email: String = inputEmail.textEmail.text.toString()
         if (Email.isEmpty()) {
-            textInputEmail.setError("Field cant be empty")
+            inputEmail.setError("Field cant be empty")
             return false
         } else {
 
             if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches() ){
-                textInputEmail.setError("Please enter valid Email Address")
+                inputEmail.setError("Please enter valid Email Address")
                 return false
             }
             else
-             textInputEmail.setError(null)
+             inputEmail.setError(null)
              return true
         }
     }
 
     //Validation for the UserName
     private fun validUserName(): Boolean {
-        var UserName: String = textInputUserName.textUsername.text.toString()
+        var UserName: String = inputUsername.textUsername.text.toString()
         if (UserName.isEmpty()) {
-            textInputUserName.setError("Field cant be empty")
+            inputUsername.setError("Field cant be empty")
             return false
         } else {
             if (UserName.equals("admin", false)) {
-                textInputUserName.setError(null)
+                inputUsername.setError(null)
                 return true
 
             } else {
-                textInputUserName.setError("Invalid Password")
+                inputUsername.setError("Invalid Password")
                 return false
             }
         }
@@ -68,34 +79,32 @@ class MainActivity : AppCompatActivity() {
 
     //Validation for the Password
     private fun validPassword(): Boolean {
-        var UserName: String = textInputPassword.textPassword.text.toString()
+        var UserName: String = inputpassword.textPassword.text.toString()
         if (UserName.isEmpty()) {
-            textInputPassword.setError("Field cant be empty")
+            inputpassword.setError("Field cant be empty")
             return false
         } else {
             if(UserName.equals("admin",false)) {
-                textInputPassword.setError(null)
+                inputpassword.setError(null)
                 return true
             }else
-                textInputPassword.setError("Invalid Passowrd")
+                inputpassword.setError("Invalid Passowrd")
                  return false
 
 
         }
     }
-    //this methode invoke when you click the submit button and
-    fun confirmInput(view:View){
-        if (validEmail() and validUserName() and validPassword()) {
 
-            Toast.makeText(this, "Login Successfull", Toast.LENGTH_SHORT).show()
-            textInputEmail.textEmail.setText(null)
-            textInputPassword.textPassword.setText(null)
-            textInputUserName.textUsername.setText(null)
-        }
+
+  val gradientDrawable=GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                                 intArrayOf(0XFFD98880.toInt(),0XFFF4D03F.toInt(),0XFF48C9B0.toInt()))
 
 
 
-    }
+
+
+
+
 }
 
 
